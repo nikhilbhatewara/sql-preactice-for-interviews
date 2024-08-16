@@ -1,0 +1,7 @@
+select user_id,spend,transaction_date
+from 
+(
+SELECT user_id,spend,transaction_date, dense_rank() OVER(PARTITION BY user_id ORDER BY transaction_date asc) as txn_rank 
+from transactions
+) a
+where txn_rank = 3
